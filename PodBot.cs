@@ -57,23 +57,23 @@ class Player
                 firstTurnFinished = true;
             }
 
-            if (nextCheckpointAngle > 90 && nextCheckpointAngle < -90)
+            if (firstTurnFinished && nextCheckpointDist < 1500)
+            {
+                if (prevCheckpointX != nextCheckpointX && prevCheckpointY != nextCheckpointY)
+                {
+                    currCheck++;
+                }
+                int checkpt = checkpoints[(currCheck) % checkpoints.Count()];
+                dirX = checkpt / 16000;
+                dirY = checkpt - 16000*dirX;
+            }
+            if (nextCheckpointAngle > 50 && nextCheckpointAngle < -50)
             {
                 thrust = 0;
             }
             else
             {
-                if (firstTurnFinished && nextCheckpointDist < 1500)
-                {
-                    if (prevCheckpointX != nextCheckpointX && prevCheckpointY != nextCheckpointY)
-                    {
-                        currCheck++;
-                    }
-                    int checkpt = checkpoints[(currCheck) % checkpoints.Count()];
-                    dirX = checkpt / 16000;
-                    dirY = checkpt - 16000*dirX;
-                }
-                else if (nextCheckpointDist < 30*thrust)
+                if (nextCheckpointDist < 30*thrust)
                 {
                     thrust = 20;
                 }

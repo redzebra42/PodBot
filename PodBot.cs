@@ -22,6 +22,7 @@ class Player
         int currCheck = 1;
         int prevCheckpointX = 0;
         int prevCheckpointY = 0;
+        bool usedBoost = false;
 
         // game loop
         while (true)
@@ -42,6 +43,7 @@ class Player
 
             int dirX = nextCheckpointX;
             int dirY = nextCheckpointY;
+            bool useBoost = false;
 
             if (!firstTurnFinished && prevCheckpointX != nextCheckpointX && prevCheckpointY != nextCheckpointY)
             {
@@ -83,12 +85,25 @@ class Player
                 }
             }
 
+            if (!usedBoost && firstTurnFinished && nextCheckpointAngle > 10 && nextCheckpointAngle < -10 && nextCheckpointDist > 3000)
+            {
+                useBoost = true;
+                usedBoost = true;
+            }
+
 
             // You have to output the target position
             // followed by the power (0 <= thrust <= 100)
             // i.e.: "x y thrust"
             Console.Error.WriteLine(currCheck);
-            Console.WriteLine(dirX + " " + dirY + " " + thrust);
+            if (!useBoost)
+            {
+                Console.WriteLine(dirX + " " + dirY + " " + thrust);
+            }
+            else
+            {
+                Console.WriteLine(dirX + " " + dirY + " " + "BOOST");
+            }
 
             prevCheckpointX = nextCheckpointX;
             prevCheckpointY = nextCheckpointY;
